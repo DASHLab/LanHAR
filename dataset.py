@@ -5,6 +5,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.nn.utils.rnn import pad_sequence
 
 
 class AllPairsDataset(Dataset):
@@ -66,10 +67,7 @@ class AllPairsDatasetContrastive(Dataset):
             input_ids6, attn_mask6
         )
 
-# -------------------------
-# collate_fn：批次内动态 padding
-# -------------------------
-from torch.nn.utils.rnn import pad_sequence
+
 
 def make_collate_fn(tokenizer, pad_time_series=False):
     pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else 0
