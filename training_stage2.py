@@ -149,20 +149,20 @@ if __name__ == "__main__":
                 correct_predictions += (pred_idx == torch.arange(len(labels), device=pred_idx.device)).sum().item()
                 total_predictions   += labels.size(0)
 
-        # —— 训练日志
+
         average_loss = total_loss / max(1, len(dataloader2))
         train_acc = (correct_predictions / max(1, total_predictions)) if total_predictions > 0 else 0.0
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {average_loss:.4f}, Accuracy: {train_acc:.4f}")
         logger.info(f"Epoch {epoch+1}/{num_epochs}, Loss: {average_loss:.4f}, Accuracy: {train_acc:.4f}")
 
-        # —— 保存最佳
+
         if train_acc > best_accuracy:
             best_accuracy = train_acc
             torch.save(model.state_dict(), os.path.join(model_save_path, f"{source}_{target}_best_model_step2_sensor.pth"))
             print(f"New best model saved with accuracy: {train_acc:.4f}")
             logger.info(f"New best model saved with accuracy: {train_acc:.4f}")
 
-        # —— 评测：传感器 → 固定标签向量（zero-shot 风格），用余弦相似度
+
         model.eval()
         with torch.no_grad():
             right = 0
@@ -177,7 +177,7 @@ if __name__ == "__main__":
                 sensor_vec_eval = sensor_embeddings_eval.sum(dim=1)                  # (B,H)
                 sensor_vec_eval = sensor_vec_eval / (sensor_vec_eval.norm(dim=-1, keepdim=True) + 1e-12)
 
-                # 与固定的 label_emb_norm 做余弦
+
                 logits = torch.matmul(sensor_vec_eval, label_emb_norm.T)             # (B,C)
                 preds = torch.argmax(logits, dim=1)
 
