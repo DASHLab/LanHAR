@@ -61,7 +61,7 @@ class Text_SimilarityModel(nn.Module):
             out = self.bert(input_ids=input_ids, attention_mask=attention_mask)
             return self._pool_hidden(out.last_hidden_state, attention_mask)  # (B,H)
 
-        # 滑动窗口
+
         chunk_embs = []
         step = self.max_len - self.stride if self.max_len > self.stride else self.max_len
         device = input_ids.device
@@ -104,7 +104,7 @@ class Text_SimilarityModel(nn.Module):
                 input_ids5, attention_mask5,
                 input_ids6, attention_mask6,
                 labels):
-        # 文本编码（支持 L>512）
+
         e1 = self._bert_embed_long(input_ids1, attention_mask1)  # (B,H)
         e2 = self._bert_embed_long(input_ids2, attention_mask2)
         e3 = self._bert_embed_long(input_ids3, attention_mask3)
@@ -120,11 +120,11 @@ class Text_SimilarityModel(nn.Module):
         positive_embeddings2_2 = self.normal(e4)
         negative_embeddings3_2 = self.normal(e6)
 
-        # 传感器编码 (B,T,H)
+
         sensor_embeddings  = self.sensor_encoder(time_series)
         sensor_embeddings2 = self.sensor_encoder2(time_series)
 
-        # 相似度
+
         similarity_matrix2 = torch.matmul(e1, e2.T)                         # (B,B)
         sim_left = sensor_embeddings.sum(dim=1)                              # (B,H)
         similarity_matrix1 = torch.matmul(sim_left, e1.T)                    # (B,B)
