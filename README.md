@@ -14,7 +14,7 @@ LanHAR maps both sensor readings and activity labels into a **shared semantic sp
 
 ---
 ## Architecture
-<img src="assets/lanhar_overview.pdf" alt="LanHAR Framework" />
+<img src="assets/lanhar_overview.png" alt="LanHAR Framework" />
 
 
 
