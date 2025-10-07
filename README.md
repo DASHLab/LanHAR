@@ -16,6 +16,26 @@ LanHAR maps both sensor readings and activity labels into a **shared semantic sp
 ## Architecture
 <img src="assets/lanhar_overview.png" alt="LanHAR Framework" />
 
+**LLMs for Semantic Interpretations**
+
+- LanHAR employs large language models (LLMs) to generate semantic interpretations of sensor readings and activity labels. An iterative re-generation process is introduced to filter out low-quality or hallucinated interpretations, ensuring semantic precision and consistency across modalities.
+
+#### Text Encoder for Semantic Alignment
+- LanHAR trains a text encoder, initialized from a pre-trained language model, to encode and align the semantic interpretations generated in step (1). This alignment enables language-guided activity recognition by matching the semantic interpretation of sensor readings with the most similar semantic representation of activity labels within the shared language space.
+
+#### Sensor Encoder for Mapping Sensor Readings to Language Space
+- LanHAR further trains a sensor encoder, built upon the text encoder from step (2), to map raw sensor readings into the language space derived from semantic interpretations. This mapping bridges the gap between sensor-level signals and high-level semantic understanding.
+
+#### Inference on Mobile Devices
+- During inference, LanHAR deploys the sensor encoder on mobile or edge devices to generate sensor embeddings, which are then compared with pre-stored (or newly added) activity label embeddings. The activity is determined through similarity computation, enabling lightweight, privacy-preserving, and real-time recognition on resource-constrained devices.
+
+
+
+
+
+
+
+
 
 
 
