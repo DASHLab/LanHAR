@@ -31,6 +31,9 @@ LanHAR maps both sensor readings and activity labels into a **shared semantic sp
 #### Inference on Mobile Devices
 - During inference, LanHAR deploys the sensor encoder on mobile or edge devices to generate sensor embeddings, which are then compared with pre-stored (or newly added) activity label embeddings. The activity is determined through similarity computation, enabling lightweight, privacy-preserving, and real-time recognition on resource-constrained devices.
 
+- ---
+## Usage
+
 
 
 
