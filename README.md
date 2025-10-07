@@ -37,7 +37,16 @@ LanHAR maps both sensor readings and activity labels into a **shared semantic sp
 ## Usage
 ---
 ## Citation
+If you find useful in your research, please cite our paper:
 
+```bibtex
+@article{yan2024language,
+  title={Language-centered human activity recognition},
+  author={Yan, Hua and Tan, Heng and Ding, Yi and Zhou, Pengfei and Namboodiri, Vinod and Yang, Yu},
+  journal={arXiv preprint arXiv:2410.00003},
+  year={2024}
+}
+```
 
 
 
