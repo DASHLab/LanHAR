@@ -55,10 +55,10 @@ Once you have the semantic interpretations, the training process consists of two
 
 ```bash
 # Stage 1: Train the semantic alignment module
-python training-stage1.py --semantic_data path/to/semantic_interpretations.json --save_dir checkpoints/stage1/
+python training-stage1.py 
 
 # Stage 2: Train the sensor encoder with transferred language alignment
-python training-stage2.py --semantic_data path/to/semantic_interpretations.json --stage1_ckpt checkpoints/stage1/best_model.pt --save_dir checkpoints/stage2/
+python training-stage2.py 
 ```
 
 ---
