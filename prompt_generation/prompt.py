@@ -94,7 +94,7 @@ When arm motion is limited or movement becomes asymmetric (e.g., using a handrai
 You task is analyzing the pattern of the above IMU data segment. 
 We summarize the analysis into the following categories. 
 Please respond strictly following the 7-point output format (numbers → direct verbal explanation; full units; mark data origin as [ACC] / [GYRO] / [SYNC]).
-For each category, choose the most fitting option if one applies; if none applies, it is okay to leave it unselected.
+For each category, answer the most fitting option if one applies; if none applies, it is okay to leave it unselected.
 If you think there is a pattern that particularly fits, you are also welcome to add.
 
 
