@@ -11,8 +11,10 @@ def generate_promt(acc_raw, gyro_raw, dataset_name, label, fs=50.0, mode="auto")
   acc_raw = pre["aligned"]["acc_xyz"]    
   gyro_raw = _rotate_gyro_to_aligned(gyro_raw, pre["gravity"]["rot_R"])
 
-  ACC_DATA_HERE = run_eda_slim(acc_raw, fs=fs)            
-  GYRO_FEATURES_JSON_HERE = extract_gyro_features(gyro_raw, fs=fs)  
+  # 3) 把“对齐后的数据”送入你已有的分析函数
+  ACC_DATA_HERE = run_eda_slim(acc_raw, fs=fs)            # 加速度用对齐后的
+  GYRO_FEATURES_JSON_HERE = extract_gyro_features(gyro_raw, fs=fs)  # 陀螺仪用旋后的
+  # 如果 gait_sync_and_impact 里假定加速度已对齐，则直接传对齐后的数组即可
   GYRO_ACC_SUMMARY_JSON_HERE = gait_sync_and_impact(acc_raw, gyro_raw, fs=fs)
 
 
@@ -76,7 +78,7 @@ Coordinates: gravity aligned with +Z vertical upward; Vert vs Horiz can be used 
 【Knowledge】
 
 1. Vertical impact–related features are indicators of high-impact tasks. 
-Stairsdown usually produces the largest vertical impact (and correspondingly higher jerk) compared with ascent and level walking. 
+In IMU, stair descent usually produces the largest vertical impact (and correspondingly higher jerk) compared with ascent and level walking. 
 Ascent/fast walking generally show moderate–strong vertical oscillation with a continuous rhythm; 
 level walking shows medium amplitude with symmetric periodicity; still presents low amplitude and low jerk. 
 Gyroscope ‘rotational intensity’ can help identify arm swing/trunk rotation typical of walking, but this depends on sensor placement and behavior
@@ -94,22 +96,24 @@ When arm motion is limited or movement becomes asymmetric (e.g., using a handrai
 You task is analyzing the pattern of the above IMU data segment. 
 We summarize the analysis into the following categories. 
 Please respond strictly following the 7-point output format (numbers → direct verbal explanation; full units; mark data origin as [ACC] / [GYRO] / [SYNC]).
-For each category, answer the most fitting option if one applies; if none applies, it is okay to leave it unselected.
-If you think there is a pattern that particularly fits, you are also welcome to add.
+Do not directly label the activity as a specific class (e.g., "walking", "jogging"). 
 
-
-• Category 1 **Intensity characteristics (overall magnitude and whether clearly non-still)**
+• Category 1 **Strength (overall magnitude and whether clearly non-still)**
 - [ACC] stats.SVM mean, std / p2p (m/s²)
 - [ACC] jerk_summary rms / p95 (m/s³)
 - [GYRO] wmag_rms / wmag_p2p (rad/s)
-→ Conclusion: intensity is low / medium / high? Clearly non-still?
+→ Conclusion: intensity is low / medium / high / others? Clearly non-still?
 
-• Category 2 **Directional characteristics (vertical vs horizontal; dominance of arm-swing / pitch / yaw)**
-- [ACC] body_summary: vert_rms / horiz_rms, vert_p2p / horiz_p2p (m/s²)
-- [GYRO] energy_frac_xyz (distribution of ∑ω²; X=roll/arm-swing, Y=pitch, Z=yaw/torso-twist)
-→ Conclusion: is vertical (Vert) dominant? Is roll dominant (high X) / pitch-biased (high Y) / low yaw (low Z)?
+• Category 2 **Directional characteristics (contrast sustained oscillation vs. impact dominance; interpret movement mechanism)**
+- [ACC] body_summary: vert_rms / horiz_rms, vert_p2p / horiz_p2p (m/s²):
+  - First report vert_rms and horiz_rms (m/s²), and explicitly compare them using relational wording. Clearly state which direction has stronger sustained oscillation (RMS).
+  - Then report vert_p2p and horiz_p2p (m/s²), and again compare them using ratio-style phrasing. If RMS and P2P suggest different dominance, describe it as a mixed profile rather than forcing a single label.
+- [GYRO] energy_frac_xyz (distribution of ∑ω²; X=roll/arm-swing, Y=pitch, Z=yaw/torso-twist):
+  -Report energy_frac_xyz (X=roll/arm-swing, Y=pitch, Z=yaw/torso-twist), and briefly state whether rotation is 
+  roll-led, pitch-dominant, yaw-suppressed, or balanced.
+→ Conclusion: Use a concise contrast statement in the form “Sustained sway leans direction, and peak forces land in direction (≈ratio×) → the motion pattern is vertical-leaning / horizontal-leaning / mixed？"
 
-• Category 3 **Rhythm characteristics (final step frequency & stability)**
+• Category 3 **Rhythm (final step frequency & stability)**
 - [ACC] peaks_summary: ibi_mean_s / ibi_std_s / ibi_cv; peaks_freq_spm = 60 / ibi_mean_s
 - [ACC] freq_summary: dom_freq_hz / dom_freq_spm, harmonic_2x_ratio, low_high_energy_ratio
 - [GYRO] spectral: step_freq_est_hz (≈ peak_rate/2), welch_wmag.top_freqs (check for integer harmonic structure)
@@ -119,17 +123,17 @@ If you think there is a pattern that particularly fits, you are also welcome to 
 • Category 4 **Waveform shape (impact-like vs smooth; rising/falling symmetry)**
 - [ACC] jerk_summary (rms / p95 / vert_rms / vert_p95) + qualitative interpretation of peak sharpness
 - [ACC] or [GYRO] (after bandpass) describe symmetry of rise vs fall (e.g., half-height width ratio)
-→ Conclusion: more impact-type or smooth transition? Symmetric or asymmetric?
+→ Conclusion: more impact-type or smooth transition / others ? Symmetric or asymmetric?
 
 • Category 5 **Postural drift / slow orientation bias (only if relevant)**
 - [GYRO] time_stats.mean_xyz (rad/s) and energy.net_angle_xyz_rad / abs_angle_xyz_rad (rad)
 → Conclusion: is there continuous forward-tilt / inward-rotation (e.g., mean_y<0, Δθ_y<0) or gradual drift instead of isolated wrist turns?
 
-• Category 6 **Cross-sensor synchronization (decoupling or not)**
+• Category 6 **Gyro–Acc sync**
 - [SYNC] step_rate_acc_hz vs step_rate_gyro_hz (Hz) and difference
 - [SYNC] median_abs_lag_s, mean_lag_s (s)
 - [SYNC] phase_consistency_0to1 (0–1)
-→ Conclusion: are step rates consistent but phase misaligned (decoupling, common in stair ascent using handrail)? Or well synchronized (typical in flat walking)?
+→ Conclusion: are step rates consistent but phase misaligned (decoupling, common in stair ascent using handrail)? Or well synchronized (typical in flat walking) / others?
 
 • Category 7 **Vertical impact (cross-sensor: accelerometer vertical component)**
 - [SYNC]/[ACC] vertical_impact: impact_median_mps2, impact_p95_mps2 (m/s²), and per-step dispersion
@@ -137,7 +141,7 @@ If you think there is a pattern that particularly fits, you are also welcome to 
 
 ────────────────────────────────
 【Output template】
-We provide an example of a final output (STRICTLY reuse this structure):
+We provide a template of the final output (STRICTLY reuse this structure):
 *Pattern Summary
 - Strength:
 - Axis dominance:
@@ -147,6 +151,9 @@ We provide an example of a final output (STRICTLY reuse this structure):
 - Gyro–Acc sync:
 - Vertical impact:
 
+In addition, We provide an example of the final output:
+- Strength: [ACC] The SVM mean is 10.27 m/s² with a std of 2.29 m/s² and p2p of 10.00 m/s². The jerk rms is 49.22 m/s³ and p95 is 75.35 m/s³. [GYRO] The wmag_rms is 0.97 rad/s and wmag_p2p is 2.20 rad/s. → Conclusion: intensity is medium. Clearly non-still.
+- Axis dominance:...
 """
 
   return prompt
