@@ -46,7 +46,7 @@ This repository includes a minimal example to help you generate prompts for huma
 Simply run:
 
 ```bash
-python prompt_example.py
+python prompt.py
 ```
 Then use your own API key or local model to generate responses from the prompt.
 
