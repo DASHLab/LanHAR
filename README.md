@@ -35,6 +35,13 @@ LanHAR maps both sensor readings and activity labels into a **shared semantic sp
 ---
 ## Usage
 #### Environment Setup
+Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+#### Prompt Generation Example
+
 ---
 ## Citation
 If you find useful in your research, please cite our paper:
