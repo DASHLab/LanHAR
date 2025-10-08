@@ -95,6 +95,7 @@ def generate_promt(acc_raw, gyro_raw, dataset_name, label, fs=50.0, mode="auto")
   We summarize the analysis into the following categories. 
   Please respond strictly following the 7-point output format (numbers → direct verbal explanation; full units; mark data origin as [ACC] / [GYRO] / [SYNC]).
   Do not directly label the activity as a specific class (e.g., "walking", "jogging"). 
+  If you think there is a pattern that particularly fits, you are also welcome to add.
   
   • Category 1 **Strength (overall magnitude and whether clearly non-still)**
   - [ACC] stats.SVM mean, std / p2p (m/s²)
