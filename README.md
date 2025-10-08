@@ -42,6 +42,14 @@ pip install -r requirements.txt
 ```
 #### Prompt Generation Example
 
+This repository includes a minimal example to help you generate prompts for human activity pattern analysis from IMU sensor features.
+Simply run:
+
+```bash
+python prompt_example.py
+```
+Then use your own API key or local model to generate responses from the prompt.
+
 ---
 ## Citation
 If you find useful in your research, please cite our paper:
