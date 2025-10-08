@@ -54,10 +54,10 @@ Then use your own API key or local model to generate responses from the prompt.
 Once you have the semantic interpretations, the training process consists of two stages:
 
 ```bash
-# Stage 1: Train the semantic alignment module
+# Stage 1: Train the text encoder
 python training-stage1.py 
 
-# Stage 2: Train the sensor encoder with transferred language alignment
+# Stage 2: Train the sensor encoder with language alignment
 python training-stage2.py 
 ```
 
