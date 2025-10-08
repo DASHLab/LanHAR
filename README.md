@@ -50,6 +50,8 @@ python prompt_example.py
 ```
 Then use your own API key or local model to generate responses from the prompt.
 
+#### Train LanHAR
+
 ---
 ## Citation
 If you find useful in your research, please cite our paper:
