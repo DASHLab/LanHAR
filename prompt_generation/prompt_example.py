@@ -4,7 +4,7 @@ from prompt import *
 
 if __name__ == "__main__":
     
-    data = np.load("data_20_120.npy")
+    data = np.load("uci_data.npy")
     acc  = data[0, :, :3].astype(float)   
     gyro = data[0, :, 3:6].astype(float)   
     dataset_name = "uci"
