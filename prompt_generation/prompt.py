@@ -161,7 +161,7 @@ def generate_promt(acc_raw, gyro_raw, dataset_name, label, fs=50.0, mode="auto")
 
 if __name__ == "__main__":
     
-    data = np.load("uci/data_20_120.npy")
+    data = np.load("data/uci_data.npy")
     acc  = data[0, :, :3].astype(float)   
     gyro = data[0, :, 3:6].astype(float)   
     dataset_name = "uci"
