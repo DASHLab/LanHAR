@@ -51,6 +51,15 @@ python prompt_example.py
 Then use your own API key or local model to generate responses from the prompt.
 
 #### Train LanHAR
+Once you have the semantic interpretations, the training process consists of two stages:
+
+```bash
+# Stage 1: Train the semantic alignment module
+python training-stage1.py --semantic_data path/to/semantic_interpretations.json --save_dir checkpoints/stage1/
+
+# Stage 2: Train the sensor encoder with transferred language alignment
+python training-stage2.py --semantic_data path/to/semantic_interpretations.json --stage1_ckpt checkpoints/stage1/best_model.pt --save_dir checkpoints/stage2/
+```
 
 ---
 ## Citation
