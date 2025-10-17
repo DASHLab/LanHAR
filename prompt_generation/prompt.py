@@ -11,10 +11,9 @@ def generate_promt(acc_raw, gyro_raw, dataset_name, label, fs=50.0, mode="auto")
   acc_raw = pre["aligned"]["acc_xyz"]    
   gyro_raw = _rotate_gyro_to_aligned(gyro_raw, pre["gravity"]["rot_R"])
 
-  # 3) 把“对齐后的数据”送入你已有的分析函数
-  ACC_DATA_HERE = run_eda_slim(acc_raw, fs=fs)            # 加速度用对齐后的
-  GYRO_FEATURES_JSON_HERE = extract_gyro_features(gyro_raw, fs=fs)  # 陀螺仪用旋后的
-  # 如果 gait_sync_and_impact 里假定加速度已对齐，则直接传对齐后的数组即可
+
+  ACC_DATA_HERE = run_eda_slim(acc_raw, fs=fs)           
+  GYRO_FEATURES_JSON_HERE = extract_gyro_features(gyro_raw, fs=fs)  
   GYRO_ACC_SUMMARY_JSON_HERE = gait_sync_and_impact(acc_raw, gyro_raw, fs=fs)
 
 
