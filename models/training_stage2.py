@@ -43,7 +43,7 @@ def main():
         pad_id=pad_id
     ).float().to(device)
 
-    dataloader2, dataloader3 = load_data_stage2(args.source, args.target, tokenizer, args.batch_size)
+    dataloader2, _ = load_data_stage2(args.source, args.target, tokenizer, args.batch_size)
     valid_loader, test_loader = load_data_test(args.source, args.target, tokenizer, args.batch_size)
 
     def load_model_ckpt(m, path):
