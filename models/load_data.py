@@ -19,12 +19,9 @@ def load_data_stage1(source_name, tokenizer, batch_size = 10):
 
 
 def load_data_stage2(source_name, target_name, tokenizer, batch_size):
-    source_text, source_data, \
-    source_text2, source_data2, \
-    source_text3, source_data3, \
-    target_text, target_data = read_data(source_name, target_name)
+    source_text, source_data, target_text, target_data = read_data(source_name, target_name)
     
-    data2 = generate_step2(target_text, target_data, source_text, source_data, source_text2, source_data2, source_text3, source_data3)
+    data2 = generate_step2(target_text, target_data, source_text, source_data)
     data3 = generate_step3(target_text, target_data)
     
 
@@ -38,10 +35,7 @@ def load_data_stage2(source_name, target_name, tokenizer, batch_size):
 
 
 def load_data_test(source_name, target_name, tokenizer, batch_size):
-    source_text, source_data, \
-    source_text2, source_data2, \
-    source_text3, source_data3, \
-    target_text, target_data = read_data(source_name, target_name)
+    source_text, source_data, target_text, target_data = read_data(source_name, target_name)
     
     data3 = generate_step3(target_text, target_data)
     dataset3 = AllPairsDataset(data3, tokenizer)
@@ -60,4 +54,5 @@ def load_data_test(source_name, target_name, tokenizer, batch_size):
     test_loader = DataLoader(dataset3, batch_size=batch_size, shuffle=False,
                              collate_fn=collate_simple, num_workers=0)
     return valid_loader, test_loader
+
 
