@@ -157,7 +157,7 @@ def custom_loss1(similarity_matrix, labels):
 def clip_loss(image_features, text_features, logit_scale=None, temperature=None):
 
     if logit_scale is None:
-        assert temperature is not None, 
+        assert temperature is not None, "pass logit_scale or temperature"
         scale = 1.0 / max(temperature, 1e-6)
     else:
         scale = logit_scale.exp().clamp(max=100.0)
@@ -190,12 +190,12 @@ def clip_loss_multipos(
         scale = logit_scale.to(dev).exp().clamp(max=100.0)
 
 
-    logits_ab = (z_a @ z_b.t()) * scale     
-    logits_ba = (z_b @ z_a.t()) * scale     
+    logits_ab = (z_a @ z_b.t()) * scale      
+    logits_ba = (z_b @ z_a.t()) * scale   
 
-    same = labels.unsqueeze(1).eq(labels.unsqueeze(0)) 
-    target_ab = same.float()                        
-    target_ba = same.t().float()            
+    same = labels.unsqueeze(1).eq(labels.unsqueeze(0))  
+    target_ab = same.float()                      
+    target_ba = same.t().float()          
 
 
     target_ab = target_ab / (target_ab.sum(dim=1, keepdim=True) + eps)
