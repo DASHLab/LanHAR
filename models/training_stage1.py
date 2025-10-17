@@ -15,7 +15,7 @@ def parse_args():
     parser.add_argument("--source", type=str, default="shoaib", help="Source dataset name")
     parser.add_argument("--batch_size", type=int, default=10, help="")
     parser.add_argument("--model_name", type=str, default="allenai/scibert_scivocab_uncased", help="")
-    parser.add_argument("--num_epochs", type=int, default=10, help="")
+    parser.add_argument("--num_epochs", type=int, default=5, help="")
     parser.add_argument("--max_len", type=int, default=512, help="")
     parser.add_argument("--stride", type=int, default=128, help="")
     parser.add_argument("--lr", type=float, default=1e-5, help="")
