@@ -76,7 +76,7 @@ def main():
         pad_id=pad_id
     ).float().to(device)
 
-    valid_loader, test_loader = load_data_test(args.source, args.target, tokenizer, args.batch_size)
+    _, test_loader = load_data_test(args.source, args.target, tokenizer, args.batch_size)
 
     def load_model_ckpt(m, path):
         if not os.path.exists(path): 
