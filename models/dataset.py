@@ -1,11 +1,7 @@
-from torch.utils.data import Dataset, DataLoader
-import random
-import numpy as np
-import pandas as pd
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence
+
 
 
 class AllPairsDataset(Dataset):
@@ -66,6 +62,7 @@ class AllPairsDatasetContrastive(Dataset):
             input_ids5, attn_mask5,
             input_ids6, attn_mask6
         )
+
 
 
 
