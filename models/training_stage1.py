@@ -12,7 +12,7 @@ def parse_args():
 
     parser.add_argument("--model_save_path", type=str, default="", help="Path to save the trained model")
     parser.add_argument("--beta", type=float, default=0.5, help="")
-    parser.add_argument("--source", type=str, default="shoaib", help="Source dataset name")
+    parser.add_argument("--source", type=str, default="uci", help="Source dataset name")
     parser.add_argument("--batch_size", type=int, default=10, help="")
     parser.add_argument("--model_name", type=str, default="allenai/scibert_scivocab_uncased", help="")
     parser.add_argument("--num_epochs", type=int, default=10, help="")
