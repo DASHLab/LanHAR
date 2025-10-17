@@ -180,15 +180,6 @@ def build_label_prototypes(device, model, tokenizer, topk=12, temperature=0.07):
         model.train()
     return label_proto_n
 
-if __name__ == "__main__":
-    
-    bert_model_name = "allenai/scibert_scivocab_uncased"
-    tokenizer = AutoTokenizer.from_pretrained(bert_model_name)
-    model = lanhar(bert_model=bert_model_name, max_len=512, stride=128, pool="mean",
-    pad_id=(tokenizer.pad_token_id or 0)).to(device).eval()
-    
-    label_proto_n = label_embedding_generation(device, model, tokenizer, topk=12, temperature=0.07)
-
 
 
 
