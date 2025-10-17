@@ -55,10 +55,10 @@ Once you have the semantic interpretations, the training process consists of two
 
 ```bash
 # Stage 1: Train the text encoder
-python training-stage1.py 
+python training_stage1.py 
 
 # Stage 2: Train the sensor encoder with language alignment
-python training-stage2.py 
+python training_stage2.py 
 ```
 
 ---
