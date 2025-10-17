@@ -9,19 +9,20 @@ import pandas as pd
 from load_data import *
 from model import *
 from label_generation import *
+from testing import *
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--model_save_path", type=str, default="", help="Path to save the trained model")
-    parser.add_argument("--beta", type=float, default=0.5, help="Lambda for loss weighting")
+    parser.add_argument("--beta", type=float, default=0.5, help="")
     parser.add_argument("--source", type=str, default="uci", help="Source dataset name")
     parser.add_argument("--target", type=str, default="hhar", help="Target dataset name")
     parser.add_argument("--batch_size", type=int, default=256, help="")
     parser.add_argument("--model_name", type=str, default="allenai/scibert_scivocab_uncased", help="")
     parser.add_argument("--lr", type=float, default=4e-5, help="")
-    parser.add_argument("--num_epochs", type=int, default=200, help="")
+    parser.add_argument("--num_epochs", type=int, default=50, help="")
     parser.add_argument("--max_len", type=int, default=512, help="")
     parser.add_argument("--stride", type=int, default=128, help="")
 
@@ -172,9 +173,8 @@ def main():
                 torch.save(model.state_dict(), os.path.join(args.model_save_path, f"{args.source}_{args.target}_best_model_step2_sensor.pth"))
                 logger.info(f"New best model saved")
         
-        
-        
- 
+
+
 
 
 
