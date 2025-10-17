@@ -4,3 +4,4 @@ pandas
 transformers
 tqdm
 scikit-learn
+hf_transfer
