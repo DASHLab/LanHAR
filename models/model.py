@@ -30,8 +30,8 @@ class lanhar(nn.Module):
         self.pad_id = pad_id
 
         self.sensor_encoder = TimeSeriesTransformer(
-            input_dim=6, d_model=self.hidden_size, nhead=4,
-            num_encoder_layers=6, dim_feedforward=2048, dropout=0.1
+            input_dim=6, d_model=self.hidden_size, nhead=2,
+            num_encoder_layers=3, dim_feedforward=1024, dropout=0.1
         )
 
         self.txt_proj = nn.Sequential(
