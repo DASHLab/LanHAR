@@ -124,7 +124,7 @@ def main():
 
                 proto_n = label_emb_norm[labels_out]       # (B,H)
                 proto_n = F.normalize(proto_n, dim=-1)
-                loss = clip_loss(sensor_vec, proto_n, logit_scale=logit_scale)
+                loss = clip_loss(sensor_vec, text_vec, logit_scale=logit_scale)
 
 
             scaler.scale(loss).backward()
